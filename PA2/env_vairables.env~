@@ -1,0 +1,7 @@
+pa2port=5432
+pa2host=localhost
+pa2db=airbnb
+pa2schema=new_york_city
+
+db_username=postgres
+db_password=postgres
