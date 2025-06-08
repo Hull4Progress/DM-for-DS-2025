@@ -16,7 +16,7 @@ from datetime import datetime
 # ============================================
 
 def hello_world():
-    return 'hello world'
+    return 'hello world!'
 
 
 def time_diff(time1, time2):
@@ -134,48 +134,83 @@ def calc_time_diff_per_year(db_eng,
 #
 # ============================================
 
-def build_query_full_join_listings_reviewsm_100():
-    q = """select *
-from listings l, reviewsm r
-where l.id = r.listing_id
-  and left(l.id,3) = '100'
--- this query fetches 406 listings, useful for testing"""
+# updated in 2025
+
+# FIRST batch of queries is with LEFT JOIN!
+
+def build_query_left_join_listingsm_reviewsm():
+    q = """
+select *
+from listingsm l left join reviewsm r 
+        on l.id = r.listing_id
+"""
     return q
+
+# with 2024 data, this query fetches data for 3313 listings, useful for testing""" 
+# with 2025 data, this query fetches data for 42,135 listings, probably not useful for testing""" 
+
+def build_query_left_join_listingsm_reviewsm_10():
+    q = """
+select *
+from listingsm l left join reviewsm r 
+        on l.id = r.listing_id
+  where left(l.id,2) = '10'
+-- with 2025 data, this query fetches data for 42,135 listings
+"""
+
+    return q
+
+# in 2025, this query fetches 3,978 listings
+# in 2024, this query fetches 406 listings, useful for testing
+
+def build_query_left_join_listingsm_reviewsm_100():
+    q = """select *
+from listingsm l left join reviewsm r 
+        on l.id = r.listing_id  
+  where left(l.id,3) = '100'
+-- with 2025 data, this query returens 3,978 listings, useful for testing
+"""
+    return q
+
+# in 2025, this query fetches 388 listings
+
+def build_query_left_join_listingsm_reviewsm_1000():
+    q = """select *
+from listings l left join reviewsm r 
+        on l.id = r.listing_id  
+where left(l.id,r) = '1000'
+-- with 2025 data, this query returens 388 listings, useful for testing
+"""
+    return q
+
+# NEXT QUERIES ARE WITH FULL JOIN
+# AND DO NOT USE LISTINGSM
+
 
 def build_query_full_join_listings_reviewsm_10():
     q = """select *
 from listings l, reviewsm r
 where l.id = r.listing_id
   and left(l.id,2) = '10'
--- this query fetches data for 3313 listings, useful for testing"""
+-- in 2025, this query fetches data for 42,135 listings; perhaps not useful
+-- in 2024, this query fetches data for 3313 listings, useful for testing
+"""
     return q
+
+def build_query_full_join_listings_reviewsm_100():
+    q = """select *
+from listings l, reviewsm r
+where l.id = r.listing_id
+  and left(l.id,3) = '100'
+"""
+    return q
+
+
 
 def build_query_full_join_listings_reviewsm():
     q = """select *
 from listings l, reviewsm r
 where l.id = r.listing_id"""
-    return q
-
-def build_query_left_join_listings_reviewsm():
-    q = """select *
-from listings l left join reviewsm r 
-        on l.id = r.listing_id"""
-    return q
-
-def build_query_left_join_listings_reviewsm_10():
-    q = """select *
-from listings l left join reviewsm r 
-        on l.id = r.listing_id
-  where left(l.id,2) = '10'
--- this query fetches data for 3313 listings, useful for testing""" 
-    return q
-
-def build_query_left_join_listings_reviewsm_100():
-    q = """select *
-from listings l left join reviewsm r 
-        on l.id = r.listing_id  
-  where left(l.id,3) = '100'
--- this query fetches data for 406 listings, useful for testing"""
     return q
 
 
